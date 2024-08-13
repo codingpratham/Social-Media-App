@@ -1,8 +1,10 @@
 import React from 'react'
-
+import { NavbarDefault } from './Navbar/Navbar'
 const Header = () => {
   return (
-    <div>Header</div>
+    <>
+    <NavbarDefault/>
+    </>
   )
 }
 
