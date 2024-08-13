@@ -1,30 +1,33 @@
-import React, { useEffect, useState } from 'react'
-import {useDispatch} from 'react-redux'
-import AuthServicesInstaces from './appwrite/auth'
-import { logout,login } from './store/AuthSlice'
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import authServicesInstance from './appwrite/auth'; // Ensure correct import
+import { logout, login } from './store/AuthSlice';
 
 const App = () => {
-  
-  const [loading,setLoading]=useState(true)
-  const dispatch = useDispatch()
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
-  useEffect(()=>{
-    AuthServicesInstaces.getCurrentUser()
-    .then((userData)=>{
-      if (userData){
-        dispatch(login({userData}))
-      }else{
-        dispatch(logout())
-      }})
-    .finally(()=>setLoading(false))
-  },[])
+  useEffect(() => {
+    authServicesInstance.getCurrentUser()
+      .then((userData) => {
+        if (userData) {
+          dispatch(login({ user: userData }));
+        } else {
+          dispatch(logout());
+        }
+      })
+      .finally(() => setLoading(false));
+  }, [dispatch]);
 
-  
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
-   
+      <h1>Hii</h1>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
