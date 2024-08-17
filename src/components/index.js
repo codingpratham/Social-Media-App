@@ -8,7 +8,7 @@ import L from "./L";
 import Login from "./Login";
 import PostCard from './PostCard'
 import Select from './Select'
-
+import Rte from "./Rte";
 export{
     Header, 
     Footer,
@@ -16,6 +16,8 @@ export{
     LogoutBtn,
     Button,
     Input,
+    Select,
+    Rte,
     L,
     Login,
     PostCard,
