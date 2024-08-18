@@ -14,7 +14,9 @@ const PostForm = () => {
 
 
   return (
-    <div>PostForm</div>
+    <>
+    <h1>PostForm</h1>
+    </>
   )
 }
 
