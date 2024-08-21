@@ -1,24 +1,26 @@
-import conf from "../conf/conf";
+import conf from '../conf/conf.js';
 import { Client, Account, ID } from "appwrite";
 
-class AuthServices {
+export class AuthService {
+    client = new Client();
+    account;
+
     constructor() {
-        this.client = new Client()
-        .setEndpoint(conf.appwriteUrl)
-        .setProject(conf.appwriteProjectId);
+        this.client
+            .setEndpoint(conf.appwriteUrl)
+            .setProject(conf.appwriteProjectId);
         this.account = new Account(this.client);
     }
 
     async createAccount({ email, password, name }) {
         try {
             const userAccount = await this.account.create(ID.unique(), email, password, name);
-
             if (userAccount) {
+                // Automatically log in the user after account creation
                 return this.login({ email, password });
-            } else {
-                return userAccount;
             }
         } catch (error) {
+            console.error("Appwrite service :: createAccount :: error", error);
             throw error;
         }
     }
@@ -27,27 +29,29 @@ class AuthServices {
         try {
             return await this.account.createEmailSession(email, password);
         } catch (error) {
+            console.error("Appwrite service :: login :: error", error);
             throw error;
         }
     }
 
     async getCurrentUser() {
         try {
-            const user = await this.account.get();
-            return user;
+            return await this.account.get();
         } catch (error) {
-            throw error;
+            console.error("Appwrite service :: getCurrentUser :: error", error);
+            return null;
         }
     }
 
-    async logOut() {
+    async logout() {
         try {
-            return await this.account.deleteSessions();
+            await this.account.deleteSessions();
         } catch (error) {
-            throw error;
+            console.error("Appwrite service :: logout :: error", error);
         }
     }
 }
 
-const authServicesInstance = new AuthServices();
-export default authServicesInstance;
+const authServiceInstance = new AuthService();
+
+export default authServiceInstance;

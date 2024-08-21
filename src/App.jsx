@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import authService from "./appwrite/auth"
+
 import {login, logout} from "./store/AuthSlice"
 import { Footer, Header } from './components/index'
 import { Outlet } from 'react-router-dom'
+import authServiceInstance from './appwrite/auth'
 
 function App() {
   const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    authService.getCurrentUser()
+    authServiceInstance.getCurrentUser()
     .then((userData) => {
       if (userData) {
         dispatch(login({userData}))

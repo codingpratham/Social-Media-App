@@ -4,12 +4,12 @@ import LogoutBtn from "./Header/LogoutBtn";
 import Container from './Container/Container';
 import Button from './Button';
 import Input from './Input';
-import L from "./L"; // Ensure the component `L` is correctly implemented
+import Logo from "./Logo"; // Ensure the component `L` is correctly implemented
 import Login from "./Login";
 import PostCard from './PostCard';
 import Select from './Select';
 import Rte from "./Rte";
-import SignUp from './SignUp';
+import SignUp from './Signup';
 import PostForm from './PostForm/PostForm';
 import AuthLayout from "./AuthLayout";
 
@@ -22,7 +22,7 @@ export {
     Input,
     Select,
     Rte,
-    L,
+    Logo,
     Login,
     PostCard,
     SignUp,

@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { Container, PostCard } from '../components'
 import service from "../appwrite/database";
 
-function AllPosts() {
+function AllPost() {
     const [posts, setPosts] = useState([])
     useEffect(() => {}, [])
     service.getPosts([]).then((posts) => {
@@ -25,4 +25,4 @@ function AllPosts() {
   )
 }
 
-export default AllPosts
+export default AllPost

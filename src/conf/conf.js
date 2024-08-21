@@ -1,13 +1,10 @@
-const conf={
-    appwriteUrl : "https://cloud.appwrite.io/v1",
-
-    appwriteProjectId: "66b89d5900218817ce47",
-
-    appwriteDatabaseId:"66b8e093001a4b34f6e5",
-
-    appwriteCollectionId:"66b8e0cb001cea985035",
-
-    appwriteBucketId:"66b8e24400159582ef0f",
-}
-
-export default conf
+const conf = {
+    appwriteUrl: import.meta.env.VITE_APPWRITE_URL || '',
+    appwriteProjectId: import.meta.env.VITE_PROJECT_ID || '',
+    appwriteDatabaseId: import.meta.env.VITE_DATABASE_ID || '',
+    appwriteCollectionId: import.meta.env.VITE_COLLECTION_ID || '',
+    appwriteBucketId: import.meta.env.VITE_BUCKET_ID || '',
+  };
+  
+  export default conf;
+  

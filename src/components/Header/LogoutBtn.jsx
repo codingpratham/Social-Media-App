@@ -1,20 +1,20 @@
 import React from 'react'
-import {login,logout} from '../../store/AuthSlice'
 import {useDispatch} from 'react-redux'
-import authServicesInstance from '../../appwrite/auth'
-import { Button } from '@material-tailwind/react'
+import authServiceInstance from '../../appwrite/auth'
+import {logout} from '../../store/AuthSlice'
 
-const LogoutBtn = () => {
+function LogoutBtn() {
     const dispatch = useDispatch()
-    const LogoutHandler=()=>{
-        authServicesInstance.logOut.then(()=>{
+    const logoutHandler = () => {
+        authServiceInstance.logout().then(() => {
             dispatch(logout())
         })
     }
   return (
-    <>
-    <Button className='inline-block px-6 py-2 duration-200 hover:bg-blue-100 rounded-full'>Logout</Button>
-    </>
+    <button
+    className='inline-bock px-6 py-2 duration-200 hover:bg-blue-100 rounded-full'
+    onClick={logoutHandler}
+    >Logout</button>
   )
 }
 

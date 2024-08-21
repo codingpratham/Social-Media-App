@@ -1,41 +1,37 @@
-import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { login } from '../store/AuthSlice'
-import { Button, Input, L } from './index'
-import { useDispatch } from 'react-redux'
-import authServicesInstance from '../appwrite/auth'
-import { useForm } from 'react-hook-form'
+import React, {useState} from 'react'
+import authService from '../appwrite/auth'
+import {Link ,useNavigate} from 'react-router-dom'
+import {login} from '../store/AuthSlice.js'
+import {Button, Input, Logo} from './index.js'
+import {useDispatch} from 'react-redux'
+import {useForm} from 'react-hook-form'
 
-const SignUp = () => {
+function Signup() {
     const navigate = useNavigate()
+    const [error, setError] = useState("")
     const dispatch = useDispatch()
-    const { register, handleSubmit } = useForm()
-    const [error, setError] = useState('')
+    const {register, handleSubmit} = useForm()
 
-    const signUp = async (data) => {
-        setError('')
+    const create = async(data) => {
+        setError("")
         try {
-            const userData = await authServicesInstance.createAccount(data)
-
+            const userData = await authService.createAccount(data)
             if (userData) {
-                const currentUser = await authServicesInstance.getCurrentUser()
-
-                if (currentUser) {
-                    dispatch(login(currentUser))
-                    navigate('/')
-                }
+                const userData = await authService.getCurrentUser()
+                if(userData) dispatch(login(userData));
+                navigate("/")
             }
         } catch (error) {
             setError(error.message)
         }
     }
 
-    return (
-        <div className="flex items-center justify-center">
-            <div className="mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10">
-                <div className="mb-2 flex justify-center">
+  return (
+    <div className="flex items-center justify-center">
+            <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
+            <div className="mb-2 flex justify-center">
                     <span className="inline-block w-full max-w-[100px]">
-                        <L width="100%" />
+                        <Logo width="100%" />
                     </span>
                 </div>
                 <h2 className="text-center text-2xl font-bold leading-tight">Sign up to create account</h2>
@@ -49,43 +45,34 @@ const SignUp = () => {
                     </Link>
                 </p>
                 {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
-                <form onSubmit={handleSubmit(signUp)}>
-                    <div className="space-y-5">
+
+                <form onSubmit={handleSubmit(create)}>
+                    <div className='space-y-5'>
                         <Input
-                            label="Full Name"
-                            placeholder="Full Name"
-                            {...register('name', {
-                                required: true,
-                                validate: {
-                                    matchPattern: (value) => /^[a-zA-Z\s]+$/.test(value) || "Name can only contain letters and spaces"
-                                }
-                            })}
+                        label="Full Name: "
+                        placeholder="Enter your full name"
+                        {...register("name", {
+                            required: true,
+                        })}
                         />
                         <Input
-                            label="Email"
-                            placeholder="Email"
-                            type="email"
-                            {...register('email', {
-                                required: true,
-                                validate: {
-                                    matchPattern: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || "Invalid email address",
-                                }
-                            })}
+                        label="Email: "
+                        placeholder="Enter your email"
+                        type="email"
+                        {...register("email", {
+                            required: true,
+                            validate: {
+                                matchPatern: (value) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
+                                "Email address must be a valid address",
+                            }
+                        })}
                         />
                         <Input
-                            label="Password"
-                            type="password"
-                            placeholder="Password"
-                            {...register('password', {
-                                required: true,
-                                minLength: {
-                                    value: 8,
-                                    message: "Password must be at least 8 characters long"
-                                },
-                                validate: {
-                                    matchPattern: (value) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value) || "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
-                                }
-                            })}
+                        label="Password: "
+                        type="password"
+                        placeholder="Enter your password"
+                        {...register("password", {
+                            required: true,})}
                         />
                         <Button type="submit" className="w-full">
                             Create Account
@@ -93,8 +80,9 @@ const SignUp = () => {
                     </div>
                 </form>
             </div>
-        </div>
-    )
+
+    </div>
+  )
 }
 
-export default SignUp
+export default Signup
